@@ -12,13 +12,17 @@ app = Flask(__name__,static_folder='static', static_url_path='')
 def style():
     return send_from_directory(app.static_folder, 'css/style.css')
 
+@app.route('/static/js/views/projects/app.js')
+def theApp():
+    return send_from_directory(app.static_folder, 'js/views/projects/app.js')
+
 @app.route('/static/js/libs/require/require.js')
 def req():
     return send_from_directory(app.static_folder, 'js/libs/require/require.js')
 
-@app.route('/static/js/app.js')
-def theApp():
-    return send_from_directory(app.static_folder, 'js/app.js')
+@app.route('/static/js/views/projects/todos.js')
+def viewsTodo():
+    return send_from_directory(app.static_folder, 'js/views/projects/todos.js')
 
 @app.route('/static/js/libs/jquery/jquery.js')
 def jquery():
@@ -32,27 +36,17 @@ def underscore():
 def backbone():
     return send_from_directory(app.static_folder, 'js/libs/backbone/backbone.js')
 
-@app.route('/static/js/router.js')
-def router():
-    return send_from_directory(app.static_folder, 'js/router.js')
+@app.route('/static/js/models/todo.js')
+def models():
+    return send_from_directory(app.static_folder, 'js/models/todo.js')
 
-@app.route('/static/js/collections/projects.js')
-def collProj():
-    return send_from_directory(app.static_folder, 'js/collections/projects.js')
+@app.route('/static/js/collections/todos.js')
+def collections():
+    return send_from_directory(app.static_folder, 'js/collections/todos.js')
 
 @app.route('/static/js/text.js')
 def text():
     return send_from_directory(app.static_folder, 'js/text.js')
-
-@app.route('/static/js/models/projects.js')
-def models():
-    return send_from_directory(app.static_folder, 'js/models/projects.js')
-
-
-
-@app.route('/js/todo.js')
-def main():
-    return send_from_directory(app.static_folder, 'todo.js')
 
 
 #This is what happens first in the application. The url http://127.0.0.1:5000 matches the / endpoint
