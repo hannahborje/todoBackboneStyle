@@ -13,52 +13,72 @@ define([
   ], function($, _, Backbone, Todos, TodoView, statsTemplate){
   var AppView = Backbone.View.extend({
 
-    el: $("#todoapp"),
+      // Bind to existing HTML
+      el: $("#todoapp"),
 
-    statsTemplate: _.template(statsTemplate),
+      // Template for stats at the bottom
+      statsTemplate: _.template(statsTemplate),
 
-    events: {
-        "click #addBtn": "add",
-      "keypress #new-todo":  "createOnEnter"
-    },
+      events: {
+          "click #addBtn": "addOneBtn",
+          "click #markAllBtn" : "markAll"
+      },
 
-   
-    initialize: function() {
-      _.bindAll(this, 'addOne', 'add', 'render');
+      // When a new model is created (in addOneBtn) it will init and bind
+      initialize: function() {
+          _.bindAll(this, 'addOne', 'addAll', 'render');
 
-      this.input    = this.$("#new-todo");
+          this.input    = this.$("#inputTodo");
 
-      Todos.bind('add',     this.addOne);
-      Todos.bind('all',     this.render);
+          Todos.bind('add',     this.addOne);
+          Todos.bind('reset',   this.addAll);
+          Todos.bind('all',     this.render);
+          // Loading todos from localstorage
+          Todos.fetch();
+      },
 
-      Todos.fetch();
-    },
+      // Refreshing the stats, rest of app not changing
+      render: function() {
+          var done = Todos.done().length;
+          this.$('#todoStats').html(this.statsTemplate({
+              total:      Todos.length,
+              done:       Todos.done().length,
+              remaining:  Todos.remaining().length
+          }));
+      },
 
-    // Re-rendering the App just means refreshing the statistics -- the rest
-    // of the app doesn't change.
-    render: function() {
-        console.log("views/app.js: render function");
-      var done = Todos.done().length;
-      this.$('#todo-stats').html(this.statsTemplate({
-        total:      Todos.length,
-        done:       Todos.done().length,
-        remaining:  Todos.remaining().length
-      }));
-    },
+      // Add todo to list by creating a view and append it to div
+      addOne: function(todo) {
+          var view = new TodoView({model: todo});
+          this.$("#theTodos").append(view.render().el);
+      },
 
-    addOne: function(todo) {
-        console.log("views/app.js: addOne function");
-        var view = new TodoView({model: todo});
-        this.$("#todo-list").append(view.render().el);
-    },
-
-      add: function(e) {
-          console.log("views/app.js: add function");
-          e.preventDefault();
-        console.log('YOLO');
-          return this;
+      // Add all items in the todos collection
+      addAll: function() {
+          Todos.each(this.addOne);
+      },
+      // Add attributes for a new todo
+      newAttributes: function() {
+          return {
+              content: this.input.val(),
+              order:   Todos.nextOrder(),
+              done:    false
+          };
+      },
+      // Creates new model for todo item
+      addOneBtn: function(e) {
+          Todos.create(this.newAttributes());
+          this.input.val('');
+      },
+      // Mark all as completed
+      markAll: function() {
+          var completed = 'true';
+          Todos.each(function (todo) {
+              todo.save({
+                  done: completed
+              });
+          });
       }
-
   });
-  return AppView;
+    return AppView;
 });
