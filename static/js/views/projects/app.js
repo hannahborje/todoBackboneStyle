@@ -1,7 +1,7 @@
 /**
  * Created by hannah on 8/26/14.
  */
-
+var completed = true;
 console.log("Views/projects/app.js");
 define([
   'jquery',
@@ -72,12 +72,21 @@ define([
       },
       // Mark all as completed
       markAll: function() {
-          var completed = 'true';
-          Todos.each(function (todo) {
-              todo.save({
-                  done: completed
+           if (completed) {
+              Todos.each(function (todo) {
+                  todo.save({
+                      done: completed
+                  });
               });
-          });
+              completed = false;
+          } else {
+              Todos.each(function (todo) {
+                  todo.save({
+                      done: ''
+                  });
+              });
+              completed = true;
+          }
       }
   });
     return AppView;
