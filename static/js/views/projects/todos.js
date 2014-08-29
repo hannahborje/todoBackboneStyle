@@ -1,7 +1,6 @@
 /**
  * Created by hannah on 8/25/14.
  */
-console.log("views/projects/todos.js");
 
 define([
   'jquery',
