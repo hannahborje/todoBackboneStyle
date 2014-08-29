@@ -21,9 +21,11 @@ There is a setup file that will help you to:
 
 1. Run the setup file (you only need to do this the first time)
 
-2. Open a terminal window and write (yes, it is a space between the dot (.) and venv...)
+2. Open a terminal window and write 
 
     .  venv/bin/activate
+
+(yes, there is a space between the dot (.) and venv...)
 
 3. and then
 
