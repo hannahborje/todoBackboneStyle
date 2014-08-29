@@ -1,17 +1,15 @@
 Author: Hannah Börjesson, 2014 Linköping
 
-This is a Todo Application created with a little help from Backbone js, Require js, Flask, Jinja2, Python, HTML, CSS, Bootstrap and a SQLite3 database.
+This is a Todo Application created with a little help from Backbone js, Require js, Flask, Jinja2, Python, HTML, CSS and Bootstrap.
 
 *** You need:
 
 - Linux/UNIX like operating system
 - Python 2.7
 - virtualenv (for Python 2.7)
-- SQLite3
 
 There is a setup file that will help you to:
 
-- create the SQLite3 database
 - create a virtualenv folder
 - install the Python dependencies
 
@@ -47,6 +45,16 @@ To get out of the virtualenv, write:
 
 *** The application flows like this:
 
-We fire it up in the todo.py-file where the url http://127.0.0.1:5000 matches the / endpoint. We then moves on to todoView.py and class TodoView that render the template for main.html. Here the script for todo.js is loaded. Todo.js kickstart the templateUrl for todo.html and makes it first call to function retrieveTodos(). In the function retrieveTodos() we get the todos stored in the database through a http get request, via todo.py -> todoView.py -> todoModel.py and back again.
+We fire it up in the todo.py-file where the url http://127.0.0.1:5000 matches the / endpoint. We then moves on to todoView.py and class TodoView that render the template for index.html. Index.html extends layout.html where for require.js and its data-main main.js is loaded. In main.js the paths for require.js is created and the app module is loaded and passed to the definition function in views/projects/app.js. 
 
+Adding a todo what a flow! 
+As soon as the user clicks enter or hit the add todo-button the AppView (who has patiently been waiting for the event) makes a function call to addOneBtn where a new model for the todo is created. When it is created it is initialized and it binds to addOne, addAll and render. AddOne adds the todo to the list by creating a view and appending it to the div (#theTodos). AddAll adds the todos in the todos collection. 
+
+What are you - Backbone js?
+Backbone is a small library for Javascript. It is designed to make your code easier to maintain and to improve the user experience by creating single page applications. 
+
+The MVC (Model-view-controller) looks a little bit like this in Backbone: 
+view -> controller -> model, where the view listens to changes made in the model.
+
+Read more on www.backbonetutorials.com
 
