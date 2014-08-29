@@ -21,9 +21,9 @@ There is a setup file that will help you to:
 
 1. Run the setup file (you only need to do this the first time)
 
-2. Open a terminal window and write
+2. Open a terminal window and write (yes, it is a space between the dot (.) and venv...)
 
-    . venv/bin/activate
+    .  venv/bin/activate
 
 3. and then
 
