@@ -21,17 +21,8 @@ define([
         return this.filter(function(todo){ return todo.get('done'); });
         },
         // Check not done
-        remaining: function() {
+        theRemains: function() {
             return this.without.apply(this, this.done());
-        },
-        // Create some order
-        nextOrder: function() {
-            if (!this.length) return 1;
-            return this.last().get('order') + 1;
-        },
-        // Todos are sorted by their original insertion order
-        comparator: function(todo) {
-            return todo.get('order');
         }
     });
     return new TodosCollection;

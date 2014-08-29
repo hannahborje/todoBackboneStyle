@@ -37,7 +37,6 @@ define([
           var content = this.model.get('content');
           this.$('.todoContent').text(content);
           this.input = this.$('.inputTodo');
-          this.input.bind('blur', this.close);
           this.input.val(content);
       },
 

@@ -2,7 +2,7 @@
  * Created by hannah on 8/26/14.
  */
 var completed = true;
-console.log("Views/projects/app.js");
+
 define([
   'jquery',
   'underscore',
@@ -10,11 +10,11 @@ define([
   'static/js/collections/todos',
   'static/js/views/projects/todos',
   'text!templates/stats.html'
-  ], function($, _, Backbone, Todos, TodoView, statsTemplate){
+  ], function($, _, Backbone, TodoList, TodoView, statsTemplate){
   var AppView = Backbone.View.extend({
 
       // Bind to existing HTML
-      el: $("#todoapp"),
+      el: $("#myTodoApp"),
 
       // Template for stats at the bottom
       statsTemplate: _.template(statsTemplate),
@@ -30,20 +30,20 @@ define([
 
           this.input    = this.$("#inputTodo");
 
-          Todos.bind('add',     this.addOne);
-          Todos.bind('reset',   this.addAll);
-          Todos.bind('all',     this.render);
+          TodoList.bind('add',     this.addOne);
+          TodoList.bind('reset',   this.addAll);
+          TodoList.bind('all',     this.render);
           // Loading todos from localstorage
-          Todos.fetch();
+          TodoList.fetch();
       },
 
       // Refreshing the stats, rest of app not changing
       render: function() {
-          var done = Todos.done().length;
+          var done = TodoList.done().length;
           this.$('#todoStats').html(this.statsTemplate({
-              total:      Todos.length,
-              done:       Todos.done().length,
-              remaining:  Todos.remaining().length
+              total:      TodoList.length,
+              done:       TodoList.done().length,
+              remaining:  TodoList.theRemains().length
           }));
       },
 
@@ -55,32 +55,32 @@ define([
 
       // Add all items in the todos collection
       addAll: function() {
-          Todos.each(this.addOne);
+          TodoList.each(this.addOne);
       },
       // Add attributes for a new todo
-      newAttributes: function() {
+      newAttr: function() {
           return {
               content: this.input.val(),
-              order:   Todos.nextOrder(),
               done:    false
           };
       },
       // Creates new model for todo item
       addOneBtn: function(e) {
-          Todos.create(this.newAttributes());
+          if(this.input.val() == '') return; //Trying to not have to have default attr
+          TodoList.create(this.newAttr());
           this.input.val('');
       },
       // Mark all as completed
       markAll: function() {
            if (completed) {
-              Todos.each(function (todo) {
+              TodoList.each(function (todo) {
                   todo.save({
                       done: completed
                   });
               });
               completed = false;
           } else {
-              Todos.each(function (todo) {
+              TodoList.each(function (todo) {
                   todo.save({
                       done: ''
                   });

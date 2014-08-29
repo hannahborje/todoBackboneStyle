@@ -22,7 +22,6 @@ require.config({
         }
     }
 });
-console.log("Main.js: Application bootstrap begin");
 //Application bootstrap begins
 require([
   // Load our app module and pass it to our definition function
