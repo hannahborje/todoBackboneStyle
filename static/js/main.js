@@ -4,7 +4,6 @@
 
 // Require.js main file, contains configuration and main entry
 
-console.log("Main.js: Main entry");
 require.config({
 
     baseUrl: "/",
