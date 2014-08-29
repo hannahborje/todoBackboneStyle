@@ -6,7 +6,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
         // Default attributes for the todo model
         defaults: {
-            content: "Empty todo...",
+            content: "Empty todo",
             done: false
         },
         // Check that created todo has content - if not add default attr
