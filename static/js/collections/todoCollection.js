@@ -9,21 +9,21 @@ define([
     'static/js/models/todo'
 ], function(_, Backbone, Store, Todo){
 
-    var TodosCollection = Backbone.Collection.extend({
+    var TodoCollection = Backbone.Collection.extend({
 
-        // Reference to todo collection model
+        // Reference to Todo collection model
         model: Todo,
 
-        localStorage: new Store("todos"),
+        localStorage: new Store("whatToDo"),
 
         // Check if done
         done: function() {
         return this.filter(function(todo){ return todo.get('done'); });
         },
-        // Check not done
+        // Check who is left
         theRemains: function() {
             return this.without.apply(this, this.done());
         }
     });
-    return new TodosCollection;
+    return new TodoCollection;
 });

@@ -6,7 +6,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
 
         // Default attributes for the todo model
         defaults: {
-            content: "Empty todo",
+            content: "Just empty",
             done: false
         },
         // Check that created todo has content - if not add default attr
@@ -16,7 +16,7 @@ define(['underscore', 'backbone'], function(_, Backbone) {
             }
         },
         // Saves change if checked or unchecked
-        toggle: function() {
+        checkState: function() {
             this.save({done: !this.get("done")});
         }
     });

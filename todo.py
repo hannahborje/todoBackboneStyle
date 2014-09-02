@@ -40,9 +40,9 @@ def backbone():
 def models():
     return send_from_directory(app.static_folder, 'js/models/todo.js')
 
-@app.route('/static/js/collections/todos.js')
+@app.route('/static/js/collections/todoCollection.js')
 def collections():
-    return send_from_directory(app.static_folder, 'js/collections/todos.js')
+    return send_from_directory(app.static_folder, 'js/collections/todoCollection.js')
 
 @app.route('/static/js/text.js')
 def text():

@@ -7,17 +7,17 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'static/js/collections/todos',
+  'static/js/collections/todoCollection',
   'static/js/views/projects/todos',
-  'text!templates/stats.html'
-  ], function($, _, Backbone, TodoList, TodoView, statsTemplate){
+  'text!templates/countTodos.html'
+  ], function($, _, Backbone, TodoList, TodoView, countTodosTemplate){
   var AppView = Backbone.View.extend({
 
       // Bind to existing HTML
       el: $("#myTodoApp"),
 
       // Template for stats at the bottom
-      statsTemplate: _.template(statsTemplate),
+      countTodosTemplate: _.template(countTodosTemplate),
 
       events: {
           "click #addBtn": "addOneBtn",
@@ -33,17 +33,16 @@ define([
           TodoList.bind('add',     this.addOne);
           TodoList.bind('reset',   this.addAll);
           TodoList.bind('all',     this.render);
-          // Loading todos from localstorage
+
+          // Load todos from localstorage
           TodoList.fetch();
       },
 
-      // Refreshing the stats, rest of app not changing
+      // Refreshing the counting, rest of app not changing
       render: function() {
           var done = TodoList.done().length;
-          this.$('#todoStats').html(this.statsTemplate({
-              total:      TodoList.length,
-              done:       TodoList.done().length,
-              remaining:  TodoList.theRemains().length
+          this.$('#todoCount').html(this.countTodosTemplate({
+              theRemains:  TodoList.theRemains().length
           }));
       },
 
@@ -66,7 +65,7 @@ define([
       },
       // Creates new model for todo item
       addOneBtn: function(e) {
-          if(this.input.val() == '') return; //Trying to not have to have default attr
+      //    if(this.input.val() == '') return; //Trying to not have to have default attr
           TodoList.create(this.newAttr());
           this.input.val('');
       },
