@@ -65,7 +65,6 @@ define([
       },
       // Creates new model for todo item
       addOneBtn: function(e) {
-      //    if(this.input.val() == '') return; //Trying to not have to have default attr
           TodoList.create(this.newAttr());
           this.input.val('');
       },
